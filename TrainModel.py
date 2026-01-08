@@ -40,15 +40,3 @@ importances = pd.DataFrame({
 
 print("\nTop Drivers of Turnover:")
 print(importances)
-
-
-# format: postgresql://username:password@host:port/database
-#engine = create_engine('postgresql://admin:Orion123@127.0.0.1:5433/mydb')
-
-#Query to test connection
-#query = "Select * From employees_final WHERE turnover_probability > 0.7;"
-
-#df = pd.read_sql(query, engine)
-
-#print(df.head())
-#print(df.info())

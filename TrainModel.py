@@ -1,3 +1,12 @@
+import sys
+import os
+
+# Tell Python where your modular files (.py) are located
+project_path = "/export/home/users/swelfr/GitProjects/pyforestmodel/"
+
+if project_path not in sys.path:
+    sys.path.append(project_path)
+
 import pandas as pd
 from sqlalchemy import create_engine
 from sklearn.model_selection import train_test_split
@@ -5,12 +14,13 @@ from sklearn.ensemble import RandomForestClassifier
 from model_evaluation import evaluate_model
 # Your modular imports
 from config import SELECTED_FEATURES, TARGET_VARIABLE
-from data_loader import load_from_postgres
+#from data_loader import load_from_postgres
 from data_preprocessing import clean_employee_data
 
 # Step 1: Load
-df_raw = load_from_postgres("SELECT * FROM employees_final")
-
+#df_raw = load_from_postgres("SELECT * FROM employees_final")
+#From SAS Viya Parquet file
+df_raw = SAS.sd2df("PARQUET.employees_raw")
 # Step 2: Preprocess
 df_clean = clean_employee_data(df_raw)
 

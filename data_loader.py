@@ -25,9 +25,19 @@ def load_from_json(file_path):
     """Fetches data from a local JSON file."""
     return pd.read_json(file_path)
 
+def load_from_parquet_sas(lib_table):
+    """
+    Uses the SAS-Python bridge to load a table from a SAS library.
+    Example input: 'PARQUET.employees_raw'
+    """
+    return SAS.sd2df(lib_table)
+
+#read parquet file in SAS
+df = SAS.sd2df("PARQUET.employees_raw")
+
 # 3. Usage:
 # Now you simply pass the variable into the function
-df = load_from_postgres(EMPLOYEE_QUERY)
+#df = load_from_postgres(EMPLOYEE_QUERY)
 
 #END statement - Success check
 if __name__ == "__main__":

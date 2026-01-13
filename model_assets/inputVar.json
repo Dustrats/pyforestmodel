@@ -1,0 +1,44 @@
+[
+    {
+        "name": "salary",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "tenure_months",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "overtime_hours",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "workload_score",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "performance_score",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "satisfaction_score",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    },
+    {
+        "name": "turnover_probability",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    }
+]

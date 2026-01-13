@@ -42,3 +42,13 @@ evaluate_model(model, X_test, y_test)
 
 #END statement - Success check
 print("✅ Model training complete.")
+
+import joblib
+
+# Define the full path where the model should live
+model_destination = "/export/home/users/swelfr/GitProjects/pyforestmodel/random_forest_model.joblib"
+
+# Save the model object to that path
+joblib.dump(model, model_destination)
+
+print(f"💾 Model saved successfully to: {model_destination}")

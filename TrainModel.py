@@ -44,21 +44,34 @@ joblib.dump(model, os.path.join(WORK_DIR, "trained_model.joblib"))
 WORK_DIR = os.environ.get('SAS_WORK_DIR', '/tmp')
 joblib.dump(model, os.path.join(WORK_DIR, "trained_model.joblib"))
 
+import os
+import shutil
+
+import os
+import shutil
+
 # Step 9: Save for Deployment
 if 'sasviya' in model.__class__.__module__:
-    DEPLOY_PATH = os.path.join(project_path, "viya_model_deploy")
+    model_name = "RF"
+    filename = f"sas_model_{model_name}.astore"
     
-    # Improved cleanup: handle both files and folders
-    import shutil
-    if os.path.exists(DEPLOY_PATH):
-        if os.path.isdir(DEPLOY_PATH):
-            shutil.rmtree(DEPLOY_PATH)
-        else:
-            os.remove(DEPLOY_PATH)
-            
-    print(f"--- Saving Model for Deployment to: {DEPLOY_PATH} ---")
+    # --- 1. Save to Git Repository (Local File System) ---
+    git_deploy_path = os.path.join(project_path, filename)
     
-    # Save call - this creates the ASTORE and metadata files automatically
-    model.save(DEPLOY_PATH)
+    if os.path.exists(git_deploy_path):
+        os.remove(git_deploy_path)
+        
+    print(f"--- Saving Model to Git Repo: {git_deploy_path} ---")
+    model.save(git_deploy_path)
     
-    print(f"✅ Deployment package saved to: {DEPLOY_PATH}")
+    # --- 2. Export to Models Caslib (CAS Memory) ---
+    # We use the dot notation 'Caslib.Table' in a single string
+    cas_destination = f"Models.sas_model_{model_name}"
+    
+    print(f"--- Exporting Model to CAS as: {cas_destination} ---")
+    
+    # Try the most minimal signature: just the destination string
+    model.export(cas_destination)
+    
+    print(f"✅ Model saved to Git: {git_deploy_path}")
+    print(f"✅ Model exported to CAS: {cas_destination}")

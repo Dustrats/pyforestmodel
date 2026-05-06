@@ -32,12 +32,26 @@ def load_from_parquet_sas(lib_table):
     """
     return SAS.sd2df(lib_table)
 
-#read parquet file in SAS
-df = SAS.sd2df("PARQUET.employees_raw")
+def load_from_parquet_local(file_path):
+    """
+    Fetches data from a local Parquet file using pure Python.
+    Note: Requires 'pyarrow' or 'fastparquet' installed in your environment.
+    """
+    return pd.read_parquet(file_path)
+
+
 
 # 3. Usage:
 # Now you simply pass the variable into the function
+
+### Load data from postgres DB
 #df = load_from_postgres(EMPLOYEE_QUERY)
+
+#read parquet file in SAS
+#df = SAS.sd2df("PARQUET.employees_raw")
+
+###Read a parquet local parquet file to pandas.
+df = load_from_parquet_local("employees_raw.parquet")
 
 #END statement - Success check
 if __name__ == "__main__":

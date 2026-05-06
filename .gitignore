@@ -1,0 +1,11 @@
+# Ignore Python compiled files
+__pycache__/
+*.pyc
+
+# Ignore SAS Viya binaries and data
+*.astore
+*.sashdat
+*.sasast
+
+# Ignore OS specific files
+.DS_Store

@@ -23,12 +23,12 @@ def load_from_json(file_path):
     """Fetches data from a local JSON file."""
     return pd.read_json(file_path)
 
-def load_from_parquet_sas(lib_table):
+def load_from_parquet_sas(sas_session, lib_table):
     """
     Uses the SAS-Python bridge to load a table from a SAS library.
-    Example input: 'PARQUET.employees_raw'
+    Requires passing the active SAS session object from the main script.
     """
-    return SAS.sd2df(lib_table)
+    return sas_session.sd2df(lib_table)
 
 def load_from_parquet_local(file_path):
     """

@@ -1,0 +1,8 @@
+[
+    {
+        "name": "left_company",
+        "level": "interval",
+        "type": "decimal",
+        "length": 8
+    }
+]

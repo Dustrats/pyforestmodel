@@ -4,6 +4,7 @@ import shutil
 import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from datetime import datetime
 
 # ==========================================
 # --- MASTER ENVIRONMENT TOGGLE ---
@@ -69,20 +70,18 @@ if RUN_LOCALLY:
     joblib.dump(model, os.path.join(project_path, "local_rf_model.joblib"))
     print(f"✅ Local Scikit-Learn model saved to {project_path}")
 else:
-    # Viya Astore & CAS Export
+    # Viya CAS Export (Bypassing local .astore save)
     model_name = "RF"
-    filename = f"sas_model_{model_name}.astore"
-    git_deploy_path = os.path.join(project_path, filename)
-
-    if os.path.exists(git_deploy_path):
-        os.remove(git_deploy_path)
     
-    print(f"--- Saving Astore to Git Repo: {git_deploy_path} ---")
-    model.save(git_deploy_path)
+    # Generate a unique timestamp (e.g., 20260507_143000)
+    run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     
-    # Export to Models Caslib for Model Manager
-    cas_destination = f"Models.sas_model_{model_name}"
+    # Append the run_id to the table name
+    cas_destination = f"Models.sas_model_{model_name}_{run_id}"
+    
     print(f"--- Exporting to CAS: {cas_destination} ---")
+    
+    # Export without the invalid force parameter
     model.export(cas_destination)
     
-    print(f"✅ Viya Model saved and exported successfully.")
+    print(f"✅ Viya Model saved and exported successfully as {cas_destination}")

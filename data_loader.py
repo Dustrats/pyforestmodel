@@ -2,7 +2,6 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 # 1. Define your Query variable (The "What")
-# Keeping this outside makes it easy to edit
 EMPLOYEE_QUERY = """
 SELECT * FROM employees_final;
 """
@@ -13,7 +12,6 @@ def load_from_postgres(sql_query):
     Connects to the database and runs the provided query.
     Returns a pandas dataframe.
     """
-    # Connection string for your specific WSL/Docker setup
     engine = create_engine('postgresql://admin:Orion123@127.0.0.1:5433/mydb')
     return pd.read_sql(sql_query, engine)
 
@@ -35,25 +33,24 @@ def load_from_parquet_sas(lib_table):
 def load_from_parquet_local(file_path):
     """
     Fetches data from a local Parquet file using pure Python.
-    Note: Requires 'pyarrow' or 'fastparquet' installed in your environment.
     """
     return pd.read_parquet(file_path)
 
 
+# ---------------------------------------------------------
+# 3. Usage & Testing (THE FIX IS HERE)
+# ---------------------------------------------------------
 
-# 3. Usage:
-# Now you simply pass the variable into the function
+# The "if __name__" block acts as a protective shield.
+# Code inside this block ONLY runs if you execute this file directly.
+# It will NOT run if you import this file into TrainModel.py.
 
-### Load data from postgres DB
-#df = load_from_postgres(EMPLOYEE_QUERY)
-
-#read parquet file in SAS
-#df = SAS.sd2df("PARQUET.employees_raw")
-
-###Read a parquet local parquet file to pandas.
-df = load_from_parquet_local("employees_raw.parquet")
-
-#END statement - Success check
 if __name__ == "__main__":
-    # This only runs if you type 'python3 data_loader.py'
     print("✅ Data loading module loaded successfully.")
+    
+    # You can put all your "test" runs in here safely.
+    # Just uncomment the one you want to test while building!
+    
+    # df = load_from_postgres(EMPLOYEE_QUERY)
+    # df = load_from_parquet_sas("PARQUET.employees_raw")
+    # df = load_from_parquet_local("employees_raw.parquet")

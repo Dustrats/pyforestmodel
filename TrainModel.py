@@ -85,3 +85,13 @@ else:
     model.export(cas_destination)
     
     print(f"✅ Viya Model saved and exported successfully as {cas_destination}")
+
+# ===================================================
+    # --- NEW METADATA CODES TO EXTRACT DESCRIPTION ---
+    # ===================================================
+    print("\n--- [MODEL METADATA LAYER DESCRIPTION] ---")
+    model_metadata = model.describe()
+      
+    # Since it's a SAS Results object, we can print it directly!
+    print(model_metadata)
+    # ===================================================
